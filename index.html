@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>-->
+    <script type="text/javascript" src="./jquery-1.7.2.min.js"></script>
+    <style>
+      .vacance { width: 200px; height: 200px; border: 10px black solid; }
+      #rouge { background-color: red; }
+      #jaune { background-color: yellow; }
+    </style>
+  </head>
+  <body>
+    <div class="vacance" id="rouge">Vacance rouge</div>
+    <div class="vacance" id="jaune">Vacance jaune</div>
+    <div id="log"></div>
+    <script>
+      var interval = null;
+      var timeout = null;
+      var color = null;
+      var iteration = 0;
+      var total_iteration = 0;
+
+      function log(str) {
+        $('#log').append(str + '<br />');
+      }
+
+      $(document).ready(function() {
+
+        $('.vacance').mouseenter(function() {
+          color = $(this).attr('id');
+          log('entering ' + color);
+          timeout = setTimeout(function() {
+            log('timeout ' + color);
+          }, 1000);
+          interval = setInterval(function() {
+            log('interval ' + color + '(iteration: ' + iteration + ', total_iteration: ' + total_iteration+ ')');
+            iteration++;
+            total_iteration++;
+          }, 1000);
+        });
+
+        $('.vacance').mouseleave(function() {
+          clearInterval(interval);
+          clearTimeout(timeout);
+          log('leave ' + color);
+          color = null;
+          iteration = 0;
+        });
+
+      });
+    </script>
+  </body>
+</html>
